@@ -1,4 +1,4 @@
-# Organ Proteomic Aging Clocks
+# Longitudinal dynamics of organ-specific proteomic aging clocks over a decade of midlife
 
 This repository contains the key methodological scripts used for our manuscript, "Longitudinal dynamics of organ-specific proteomic aging clocks over a decade of midlife"
 
