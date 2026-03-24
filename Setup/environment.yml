@@ -1,0 +1,23 @@
+name: organ_clocks_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - scikit-learn
+  - joblib
+  - tqdm
+  - statsmodels
+  - pydot
+  - graphviz
+  - python-graphviz
+  - openjdk
+  # Java dependency for Tetrad
+  - jpype1
+  - git 
+  - pip
+  - pip:
+    - git+https://github.com/cmu-phil/py-tetrad.git
