@@ -21,7 +21,7 @@ import argparse
 DATA_FILE       = "../Data/Metadata.csv"
 PROTEIN_FILE    = "../Data/Protein_Dataset_Randomized.csv"
 ORGAN_MAP_FILE  = "../Data/Organ_Seq_Id_map.csv"
-OUT_DIR         = "results"
+OUT_DIR         = "../Results"
 
 
 def parse_args():

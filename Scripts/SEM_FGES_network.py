@@ -13,7 +13,7 @@ from pytetrad.tools.TetradSearch import TetradSearch
 
 # --- Configuration ---
 # File and Data Settings
-CSV_PATH = "agegap_sex_adjusted.csv"
+CSV_PATH = "../Results/agegap_sex_adjusted.csv"
 INDEX_COL = "ParticipantID"
 
 # Bootstrap & Consensus Settings

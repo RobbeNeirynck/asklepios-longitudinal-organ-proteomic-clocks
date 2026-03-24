@@ -7,7 +7,7 @@ library(glue)
 # --- Configuration ---
 PREDICTIONS_FILE <- "../Data/Organ_Age_Predictions.csv"
 METADATA_FILE    <- "../Data/Metadata.csv"
-OUTPUT_FILE      <- "../DemoResults/agegap_sex_adjusted.csv"
+OUTPUT_FILE      <- "../Results/agegap_sex_adjusted.csv"
 
 TARGET_ORGANS <- c("Immune", "Brain", "Liver", "Artery", "Adipose",
                    "Pancreas", "Heart", "Kidney", "Lung", "Muscle", "Intestine")

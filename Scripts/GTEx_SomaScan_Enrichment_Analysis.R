@@ -12,7 +12,7 @@ suppressPackageStartupMessages({
 # Hardcoded paths relative to the Scripts folder
 GTEX_DIR        <- "../Data/GTEx"
 PS_SOMA_CV_FILE <- "../Data/SomaScanCVs.csv"
-OUT_DIR         <- "../DemoResults/GTEx_Enrichment"
+OUT_DIR         <- "../Results/GTEx_Enrichment"
 
 # Map GTEx specific Tissues to higher-level Organs
 
