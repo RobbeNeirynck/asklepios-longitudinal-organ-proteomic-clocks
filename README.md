@@ -78,7 +78,7 @@ To run these scripts on your own dataset, format your protein and meta data to m
 This project is covered under the MIT License.
 
 ## Citation
-If you use this code or data in your research, please cite our preprint:
+If you use this code in your research, please cite our preprint:
 
 ```bibtex
 @article{Neirynck2026,
