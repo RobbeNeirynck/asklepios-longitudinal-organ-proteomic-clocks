@@ -18,8 +18,6 @@ conda activate organ_clocks_env
 python Scripts/Apply_Aging_Clocks.py --data path/to/raw_rfu_data.csv
 ```
 
-The model files are stored with Git LFS. If you already cloned the repository before installing Git LFS, run `git lfs pull` from the repository folder.
-
 By default, predictions are saved to `Results/organ_age_predictions.csv`. Use `--id-col` if your sample identifier column has another name and `--out` to choose another output path.
 
 ### Python Environment Setup
