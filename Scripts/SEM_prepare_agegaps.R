@@ -8,6 +8,7 @@ library(glue)
 PREDICTIONS_FILE <- "../Data/Organ_Age_Predictions.csv"
 METADATA_FILE    <- "../Data/Metadata.csv"
 OUTPUT_FILE      <- "../Results/agegap_sex_adjusted.csv"
+dir.create(dirname(OUTPUT_FILE), recursive = TRUE, showWarnings = FALSE)
 
 TARGET_ORGANS <- c("Immune", "Brain", "Liver", "Artery", "Adipose",
                    "Pancreas", "Heart", "Kidney", "Lung", "Muscle", "Intestine")

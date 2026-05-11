@@ -13,6 +13,7 @@ suppressPackageStartupMessages({
 GTEX_DIR        <- "../Data/GTEx"
 PS_SOMA_CV_FILE <- "../Data/SomaScanCVs.csv"
 OUT_DIR         <- "../Results/GTEx_Enrichment"
+dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
 # Map GTEx specific Tissues to higher-level Organs
 
@@ -270,4 +271,4 @@ output_table <- final_table %>%
   )
 
 # Export to Excel
-write_xlsx(output_table, "supplementary_data.xlsx")
+write_xlsx(output_table, file.path(OUT_DIR, "supplementary_data.xlsx"))

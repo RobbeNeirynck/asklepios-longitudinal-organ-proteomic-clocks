@@ -6,6 +6,19 @@ A preprint is available at https://www.biorxiv.org/content/10.64898/2026.02.17.7
 
 Developed and tested on Windows 11, Python Version 3.10 and R Version 4.3.0.
 
+### Apply the Published Aging Clocks
+The trained organ aging clocks are provided in `Models/`. To apply them to your own SomaScan data, provide a CSV with one row per sample, a `SampleID` column, and raw RFU protein intensities as protein columns. Protein IDs should use the `6578-29` format.
+
+```bash
+git clone <repository-url>
+cd SharingMainScripts
+conda env create -f Setup/environment.yml
+conda activate organ_clocks_env
+python Scripts/Apply_Aging_Clocks.py --data path/to/raw_rfu_data.csv
+```
+
+By default, predictions are saved to `Results/organ_age_predictions.csv`. Use `--id-col` if your sample identifier column has another name and `--out` to choose another output path.
+
 ### Python Environment Setup
 Expected installation time: ~10-15 minutes.
 
@@ -30,8 +43,8 @@ Individual-level Asklepios data is not publicly available. To test scripts and v
 #### Using Your Own Data
 To run these scripts on your own dataset, format your files to match the structure in `Data/`:
 1. **Metadata.csv**: Must contain `SampleID`, `Age`, `Sex`, `ParticipantID`, and `Round`.
-2. **Protein Dataset**: Columns should be `SampleID` followed by protein abundances.
-3. **Organ Mapping**: A CSV file mapping proteins to organs (`SeqId` and `Organ` columns).
+2. **Protein Dataset**: Columns should be `SampleID` followed by raw RFU protein abundances, with protein IDs formatted as `6578-29`.
+3. **Organ Mapping**: A CSV file mapping proteins to organs (`SeqID` and `Organ` columns).
 
 Ensure these files are placed in the `Data/` folder or update the file paths at the top of each script.
 
@@ -46,7 +59,7 @@ The SomaScan CV values used for QC (`SomaScanCVs.csv`) are derived from:
 Download the **GTEx v8 gene reads** (GCT format) from the [GTEx Portal](https://gtexportal.org/). Place the downloaded `.gct` files in `Data/GTEx/`.
 
 ### Usage
-All scripts are designed to be run from the `Scripts/` directory.
+The manuscript analysis scripts are designed to be run from the `Scripts/` directory.
 
 #### 1. Organ Clock Training
 **Expected Runtime:** ~5-10 minutes (on demo data).

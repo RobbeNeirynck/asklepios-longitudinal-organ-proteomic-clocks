@@ -19,7 +19,7 @@ import argparse
 
 # Default File Paths
 DATA_FILE       = "../Data/Metadata.csv"
-PROTEIN_FILE    = "../Data/Protein_Dataset_Randomized.csv"
+PROTEIN_FILE    = "../Data/Protein_Dataset_Permutated.csv"
 ORGAN_MAP_FILE  = "../Data/Organ_Seq_Id_map.csv"
 OUT_DIR         = "../Results"
 
@@ -160,6 +160,8 @@ def main():
     # Load Data
     meta_df = pd.read_csv(args.data)
     prot_df = pd.read_csv(args.protein)
+    protein_cols = [c for c in prot_df.columns if c != "SampleID"]
+    prot_df[protein_cols] = np.log2(prot_df[protein_cols].apply(pd.to_numeric, errors="coerce") + 1)
     
     # Merge datasets on SampleID
     df = pd.merge(meta_df, prot_df, on="SampleID", how="inner")
