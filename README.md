@@ -10,12 +10,15 @@ Developed and tested on Windows 11, Python Version 3.10 and R Version 4.3.0.
 The trained organ aging clocks are provided in `Models/`. To apply them to your own SomaScan data, provide a CSV with one row per sample, a `SampleID` column, and raw RFU protein intensities as protein columns. Protein IDs should use the `6578-29` format.
 
 ```bash
-git clone <repository-url>
-cd SharingMainScripts
+git lfs install
+git clone https://github.com/RobbeNeirynck/asklepios-longitudinal-organ-proteomic-clocks.git
+cd asklepios-longitudinal-organ-proteomic-clocks
 conda env create -f Setup/environment.yml
 conda activate organ_clocks_env
 python Scripts/Apply_Aging_Clocks.py --data path/to/raw_rfu_data.csv
 ```
+
+The model files are stored with Git LFS. If you already cloned the repository before installing Git LFS, run `git lfs pull` from the repository folder.
 
 By default, predictions are saved to `Results/organ_age_predictions.csv`. Use `--id-col` if your sample identifier column has another name and `--out` to choose another output path.
 
