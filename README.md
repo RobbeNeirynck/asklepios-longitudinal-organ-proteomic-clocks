@@ -7,7 +7,7 @@ A preprint is available at https://www.biorxiv.org/content/10.64898/2026.02.17.7
 Developed and tested on Windows 11, Python Version 3.10 and R Version 4.3.0.
 
 ### Apply the Published Aging Clocks
-The trained organ aging clocks are provided in `Models/`. To apply them to your own SomaScan data, provide a CSV with one row per sample, a `SampleID` column, and raw RFU protein intensities as protein columns. Protein IDs should use the `6578-29` format.
+The trained organ aging clocks are provided in `Models/` for SomaScan 7K and SomaScan 5K input data. The 5K models were trained after converting the 7K proteins using the Plasma Scaler v4.1 7K to v4.0 5K conversion factors from [Canopy](https://github.com/SomaLogic/Canopy/blob/main/somadata/data/lift.zip). To apply the clocks to your own data, provide a CSV with one row per sample, a `SampleID` column, and raw RFU protein intensities as protein columns. Protein IDs should use the `6578-29` format.
 
 ```bash
 git lfs install
@@ -15,10 +15,10 @@ git clone https://github.com/RobbeNeirynck/asklepios-longitudinal-organ-proteomi
 cd asklepios-longitudinal-organ-proteomic-clocks
 conda env create -f Setup/environment.yml
 conda activate organ_clocks_env
-python Scripts/Apply_Aging_Clocks.py --data path/to/raw_rfu_data.csv
+python Scripts/Apply_Aging_Clocks.py --data path/to/raw_rfu_data.csv --platform 7k
 ```
 
-By default, predictions are saved to `Results/organ_age_predictions.csv`. Use `--id-col` if your sample identifier column has another name and `--out` to choose another output path.
+Use `--platform 7k` for SomaScan 7K data or `--platform 5k` for SomaScan 5K data. By default, predictions are saved to `Results/organ_age_predictions_<platform>.csv`. Use `--id-col` if your sample identifier column has another name and `--out` to choose another output path.
 
 ### Python Environment Setup
 Expected installation time: ~10-15 minutes.

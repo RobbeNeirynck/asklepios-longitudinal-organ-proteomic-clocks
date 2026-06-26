@@ -13,7 +13,7 @@ PROTEIN_ID_RE = re.compile(r"^\d+-\d+$")
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCRIPT_DIR.parent
 MODELS_DIR = ROOT_DIR / "Models"
-OUT_FILE = ROOT_DIR / "Results" / "organ_age_predictions.csv"
+PLATFORM_CHOICES = ("7k", "5k")
 
 
 def parse_args():
@@ -21,15 +21,39 @@ def parse_args():
         description="Apply the trained organ proteomic aging clocks to raw RFU data."
     )
     parser.add_argument("--data", required=True, help="Path to protein abundance CSV with raw RFU values.")
+    parser.add_argument(
+        "--platform",
+        choices=PLATFORM_CHOICES,
+        default="7k",
+        help="SomaScan platform of the input data and model set to use (default: 7k).",
+    )
     parser.add_argument("--id-col", default="SampleID", help="Sample identifier column (default: SampleID).")
-    parser.add_argument("--out", default=OUT_FILE, help="Output CSV path (default: Results/organ_age_predictions.csv).")
+    parser.add_argument(
+        "--out",
+        default=None,
+        help="Output CSV path (default: Results/organ_age_predictions_<platform>.csv).",
+    )
     return parser.parse_args()
 
 
-def load_clock_files():
+def model_paths_for_platform(platform):
     model_paths = sorted(MODELS_DIR.glob("*.pkl"))
     if not model_paths:
         sys.exit(f"\n[ERROR] No .pkl files found in {MODELS_DIR}")
+
+    if platform == "5k":
+        return [p for p in model_paths if p.stem.endswith("_5K")]
+    return [p for p in model_paths if not p.stem.endswith("_5K")]
+
+
+def default_output_path(platform):
+    return ROOT_DIR / "Results" / f"organ_age_predictions_{platform}.csv"
+
+
+def load_clock_files(platform):
+    model_paths = model_paths_for_platform(platform)
+    if not model_paths:
+        sys.exit(f"\n[ERROR] No {platform.upper()} model files found in {MODELS_DIR}")
 
     clocks = []
     for model_path in model_paths:
@@ -144,7 +168,7 @@ def main():
     if args.id_col not in user_df.columns:
         sys.exit(f"\n[ERROR] Identifier column '{args.id_col}' not found in the data.")
 
-    clocks = load_clock_files()
+    clocks = load_clock_files(args.platform)
     required_features = sorted({feature for clock in clocks for feature in clock["features"]})
 
     warn_about_column_names(user_df, args.id_col)
@@ -159,7 +183,7 @@ def main():
     warn_about_input_scale(user_df, diagnostic_features)
     user_df, missing_features = add_missing_required_proteins(user_df, required_features)
 
-    print(f"Found {len(clocks)} organ clocks. Beginning inference...\n")
+    print(f"Found {len(clocks)} {args.platform.upper()} organ clocks. Beginning inference...\n")
 
     imputation_warnings = []
     prediction_frames = []
@@ -187,7 +211,7 @@ def main():
         )
         print(f"  [SUCCESS] {organ} ages calculated.")
 
-    out_path = Path(args.out)
+    out_path = Path(args.out) if args.out else default_output_path(args.platform)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     results_df = pd.concat(prediction_frames, ignore_index=True)
     results_df.to_csv(out_path, index=False)
@@ -216,3 +240,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
